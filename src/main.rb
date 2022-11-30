@@ -1,9 +1,22 @@
-def to_ternary(x); end
+def to_ternary(x)
+  res = ''
+
+  if x % 3 == 0
+    x %= 3
+    res << '1'
+    while x % 3 != 0
+      print x
+      res << '1'
+      x %= 3
+    end
+  end
+  res << x.to_s
+end
 
 # Tests
 require 'test/unit'
 class TestCantor < Test::Unit::TestCase
-  def test_to_ternary
-    assert_equal(10, to_ternary(3))
+  def test_base_ternary
+    assert_equal(10.to_s, to_ternary(3))
   end
 end
