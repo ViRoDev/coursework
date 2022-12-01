@@ -74,4 +74,20 @@ class TestFractionalTernary < Test::Unit::TestCase
   def test_0_24
     assert_equal('0201102212', fractional_to_ternary(0.24))
   end
+
+  def test_fraction_one_over_two
+    assert_equal('1111111111', fractional_to_ternary(1.0 / 2))
+  end
+
+  def test_fraction_one_over_four
+    assert_equal('0202020202', fractional_to_ternary(1.0 / 4))
+  end
+
+  def test_fraction_one_over_five
+    assert_equal('0121012101', fractional_to_ternary(1.0 / 5))
+  end
+
+  def test_fraction_one_over_six
+    assert_equal('0111111111', fractional_to_ternary(1.0 / 6))
+  end
 end
