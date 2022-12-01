@@ -1,20 +1,29 @@
-def to_ternary(x)
-  res = ''
-  while x >= 3
-    res << (x % 3).to_s
-    x /= 3
-  end
+require_relative 'integer_to_ternary'
+require_relative 'fractional_to_ternary'
 
-  res << x.to_s
-  res.reverse
+def to_ternary(number)
+  res = ''
+  integer_base10 = number.floor
+
+  integer_base3 = integer_to_ternary(integer_base10)
+  fractional_base3 = fractional_to_ternary(number.modulo(1))
+  #   print fractional_base3
+  res << integer_base3.to_s
+
+  #   print 12.0.modulo(1).eql?(0.0)
+  return res.to_i.to_s if number.to_f.modulo(1).eql?(0.0)
+
+  res << '.' << fractional_base3
+  res
 end
 
 # Tests
 require 'test/unit'
-class TestCantor < Test::Unit::TestCase
+require 'bigdecimal'
+require 'bigdecimal/util'
+class TestTernary < Test::Unit::TestCase
   def test_base_ternary
     assert_equal(10.to_s, to_ternary(3))
-    print 'Base Test Passed'
   end
 
   def test_zero_ternary
@@ -35,5 +44,13 @@ class TestCantor < Test::Unit::TestCase
 
   def test_three_digits_ternary_2
     assert_equal(1122.to_s, to_ternary(44))
+  end
+
+  def test_with_fractions_zero
+    assert_equal('0', to_ternary(0.0))
+  end
+
+  def test_with_fractions_one_and_one_over_base
+    assert_equal('1.1', to_ternary(1 + 1.0 / 3))
   end
 end
