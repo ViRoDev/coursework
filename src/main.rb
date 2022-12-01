@@ -7,14 +7,10 @@ def to_ternary(number)
 
   integer_base3 = integer_to_ternary(integer_base10)
   fractional_base3 = fractional_to_ternary(number.modulo(1))
-  #   print fractional_base3
   res << integer_base3.to_s
-
-  #   print 12.0.modulo(1).eql?(0.0)
   return res.to_i.to_s if number.to_f.modulo(1).eql?(0.0)
 
   res << '.' << fractional_base3
-  res
 end
 
 # Tests
