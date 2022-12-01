@@ -13,6 +13,34 @@ def replace_every_digit_after_first_1(string)
   end.join('')
 end
 
+class String
+  # With precision up to 3 digits after the dot
+  def to_float_from_binary
+    print "BINARY: #{self}"
+
+    base = 2
+    return to_i(2).to_f if to_f.modulo(1).eql?(0.0)
+
+    # If not, convert the hard way...
+    integer_part = to_f.floor.to_i.to_s(2).to_i
+
+    fractional_part = to_f.modulo(1).to_s.split('.')[1]
+
+    one_over_base = 1.0 / base
+
+    values = fractional_part.split('').each_with_index.map do |digit, idx|
+      next digit.to_i * (one_over_base**(idx + 1))
+    end
+
+    print values
+    fractional_part = values.reduce(0.0) do |sum, num|
+      sum + num
+    end
+
+    integer_part + fractional_part.to_s[0..4].to_f
+  end
+end
+
 class Numeric
   def to_cantor
     # Step 1: Make ternary representation
@@ -29,10 +57,10 @@ class Numeric
     # binary.to_f
 
     # Works for integer values, but we need it for fractional too
-    print "\n\nBINARY: #{binary}\n\n"
-    return binary.to_i(2) if to_f.modulo(1).eql?(0.0)
+    # return binary.to_i(2) if to_f.modulo(1).eql?(0.0)
 
-    binary.to_f
+    # Need somthing like binary.to_f(2)
+    binary.to_float_from_binary
   end
 end
 
@@ -73,5 +101,15 @@ class TestToCantor < Test::Unit::TestCase
   # 10 in base2 is 2 in base10
   def test_to_cantor_six
     assert_equal(2, 6.to_cantor)
+  end
+
+  # 1 / 4 in base10 => 0.02020202 in base3
+  # replace every digit after first 1 with 1
+  # (no 1's, so skip)
+  # replace every 2 with 1
+  # => 0.0101010101...
+  # 0.01010101 in base2 == 1/3 in base10
+  def test_fraction_one_over_four
+    assert_equal((1.0 / 3).to_s[0..4].to_f, (1.0 / 4).to_cantor)
   end
 end
