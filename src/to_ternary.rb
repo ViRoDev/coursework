@@ -4,7 +4,13 @@ require_relative 'fractional_to_ternary'
 class Numeric
   def to_ternary
     number = self
-    res = ''
+    sign = ''
+    if number < 0
+      sign = '-'
+      number = number.abs
+    end
+
+    res = sign
     integer_base10 = number.floor
 
     integer_base3 = integer_to_ternary(integer_base10)
@@ -51,5 +57,18 @@ class TestTernary < Test::Unit::TestCase
 
   def test_with_fractions_one_and_one_over_base
     assert_equal('1.1', (1 + 1.0 / 3).to_ternary)
+  end
+
+  def test_negative_one_digit
+    assert_equal('-2', -2.to_ternary)
+  end
+
+  def test_negative_two_digits
+    assert_equal('-12', (-5 * 1).to_ternary)
+  end
+
+  def test_negative_with_fractional
+    print((-2 - (1.0 / 3)).floor)
+    assert_equal('-2.1', (-2 - (1.0 / 3)).to_ternary)
   end
 end
