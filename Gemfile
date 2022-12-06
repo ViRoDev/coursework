@@ -6,3 +6,5 @@ source "https://rubygems.org"
 
 gem "reek", "~> 6.1"
 gem "rubocop", "~> 1.39"
+
+gem "chartkick", "~> 4.2"

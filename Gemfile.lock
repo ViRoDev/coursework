@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    chartkick (4.2.1)
     json (2.6.2)
     kwalify (0.7.2)
     parallel (1.22.1)
@@ -33,6 +34,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  chartkick (~> 4.2)
   reek (~> 6.1)
   rubocop (~> 1.39)
 
