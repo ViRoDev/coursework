@@ -22,6 +22,7 @@ def fractional_to_ternary(number)
 end
 
 # for bases < 10, for bases > 10, this code should be replaced
+# TODO: add test coverage
 def handle_overflow(potential_overflowed_ternary)
   res = potential_overflowed_ternary
   if res[-1] == (BASE - 1).to_s
@@ -32,6 +33,7 @@ def handle_overflow(potential_overflowed_ternary)
       if is_prev_overflowed
         case char
           # TODO: rewrite to any base
+          # Maybe create a dictionary for every digit of new base :?
         when '0'
           overflowed << '1'
           is_prev_overflowed = false
