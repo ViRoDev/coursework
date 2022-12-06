@@ -16,8 +16,6 @@ end
 class String
   # With precision up to 3 digits after the dot
   def to_float_from_binary
-    print "BINARY: #{self}"
-
     base = 2
     return to_i(2).to_f if to_f.modulo(1).eql?(0.0)
 
@@ -32,7 +30,6 @@ class String
       next digit.to_i * (one_over_base**(idx + 1))
     end
 
-    print values
     fractional_part = values.reduce(0.0) do |sum, num|
       sum + num
     end
