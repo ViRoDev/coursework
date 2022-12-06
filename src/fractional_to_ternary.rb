@@ -18,26 +18,29 @@ def fractional_to_ternary(number)
   end
   res << number.to_i.to_s
 
-  res = remove_trailing_zeroes(res)
+  handle_overflow(remove_trailing_zeroes(res))
+end
 
-  # for bases < 10, for bases > 10, this code should be replaced
+# for bases < 10, for bases > 10, this code should be replaced
+def handle_overflow(potential_overflowed_ternary)
+  res = potential_overflowed_ternary
   if res[-1] == (BASE - 1).to_s
     reversed = res.reverse # res[0..CALCULATION_LIMIT].reverse
-    ovrfl = true
+    is_prev_overflowed = true
     overflowed = ''
     for char in reversed.split('')
-      if ovrfl
+      if is_prev_overflowed
         case char
           # TODO: rewrite to any base
         when '0'
           overflowed << '1'
-          ovrfl = false
+          is_prev_overflowed = false
         when '1'
           overflowed << '2'
-          ovrfl = false
+          is_prev_overflowed = false
         when '2'
           overflowed << '0'
-          ovrfl = true
+          is_prev_overflowed = true
         end
       else
         overflowed << char
@@ -46,6 +49,7 @@ def fractional_to_ternary(number)
     res = overflowed.reverse
   end
   # Hardcoded, yeah
+  # What are you gonna do 'bout it?
   remove_trailing_zeroes(res)[0..PRECISION - 1]
 end
 
