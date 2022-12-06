@@ -16,8 +16,6 @@ class Numeric
   end
 end
 
-print 3.to_ternary
-
 # Tests
 require 'test/unit'
 require 'bigdecimal'
