@@ -52,14 +52,6 @@ class Numeric
     binary = replaced.gsub('2', '1')
 
     # Step 4: interpret result as binary
-    # TODO: implement conversion
-    #
-    # binary.to_f
-
-    # Works for integer values, but we need it for fractional too
-    # return binary.to_i(2) if to_f.modulo(1).eql?(0.0)
-
-    # Need somthing like binary.to_f(2)
     binary.to_float_from_binary
   end
 end
