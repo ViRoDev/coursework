@@ -37,7 +37,7 @@ def fractional_to_ternary(number)
           ovrfl = false
         when '2'
           overflowed << '0'
-          overf = true
+          ovrfl = true
         end
       else
         overflowed << char
