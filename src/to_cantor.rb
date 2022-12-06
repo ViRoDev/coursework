@@ -2,12 +2,11 @@ require_relative 'to_ternary'
 require_relative 'to_float_from_binary'
 
 def replace_everything_after_first_occurance(string, after_what, replace_with)
-  ternary = string
-  return string unless ternary.include?(after_what)
+  return string unless string.include?(after_what)
 
   # ..Replace every single digit after it w/ '1'
-  idx = ternary.index(after_what)
-  ternary.split('').each_with_index.map do |num, index|
+  idx = string.index(after_what)
+  string.split('').each_with_index.map do |num, index|
     next replace_with if index > idx
 
     next num
@@ -19,8 +18,9 @@ class Numeric
     # Step 1: Make ternary representation
     ternary = to_ternary
 
-    # Step 2: If it conitains '1'...
+    # Step 2: If it conitains '1'... replace every digit after it with '1'
     replaced = replace_everything_after_first_occurance(ternary, '1', '1')
+
     # Step 3:  Replace every remaining 2's with '1'
     binary = replaced.gsub('2', '1')
 
