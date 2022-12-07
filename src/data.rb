@@ -5,8 +5,8 @@ def get_data
   dots = 1..NUMBER_OF_DOTS
 
   arr = []
-  for x in dots
-    arr.push(1.0 * x / NUMBER_OF_DOTS)
+  dots.each do |value|
+    arr.push(1.0 * value / NUMBER_OF_DOTS)
   end
 
   # print arr
