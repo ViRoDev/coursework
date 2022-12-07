@@ -7,6 +7,7 @@ BASE = 3
 def fractional_to_ternary(number)
   res = ''
   limit = CALCULATION_LIMIT # additional to check overflow
+  number = BigDecimal(number.to_s)
   while number.modulo(1) != 0 && limit > 0
     number *= BASE
     integer_part = number.floor
@@ -25,7 +26,7 @@ end
 # TODO: add test coverage
 def handle_overflow(potential_overflowed_ternary)
   res = potential_overflowed_ternary
-  if res[-1] == (BASE - 1).to_s
+  if res[-1] == (BASE - 1).to_s && res.length > 10
     reversed = res.reverse # res[0..CALCULATION_LIMIT].reverse
     is_prev_overflowed = true
     overflowed = ''
@@ -56,10 +57,25 @@ def handle_overflow(potential_overflowed_ternary)
 end
 
 def remove_trailing_zeroes(string_number)
-  "0.#{string_number}"
-    .to_f # removes trailing zeroes
-    .to_s
-    .split('.')[1] # gets fractional part
+  reverse = string_number.reverse.split('')
+  remove = true
+  res = []
+  for x in reverse
+    unless x == '0' && remove
+      res.push(x) unless x == '0' && remove
+      remove = false
+    end
+
+  end
+
+  if res.length > 0 then res.join('').reverse
+  else
+    '0'
+  end
+  # "0.#{string_number}"
+  #   .to_f # removes trailing zeroes
+  #   .to_s
+  #   .split('.')[1] # gets fractional part
 end
 
 # Tests
@@ -95,5 +111,17 @@ class TestFractionalTernary < Test::Unit::TestCase
 
   def test_fraction_one_over_six
     assert_equal('0111111111', fractional_to_ternary(1.0 / 6))
+  end
+
+  def test_fraction_two_over_three
+    assert_equal('2', fractional_to_ternary(2.0 / 3))
+  end
+
+  def test_fraction_one_over_hunder
+    assert_equal('0000210212', fractional_to_ternary(1.0 / 100))
+  end
+
+  def test_5_over_9
+    assert_equal('12', fractional_to_ternary(5.0 / 9))
   end
 end
