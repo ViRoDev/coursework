@@ -1,3 +1,5 @@
+require 'bigdecimal'
+require 'bigdecimal/util'
 require_relative 'integer_to_ternary'
 require_relative 'fractional_to_ternary'
 
@@ -18,14 +20,13 @@ class Numeric
     res << integer_base3.to_s
     return res.to_i.to_s if number.to_f.modulo(1).eql?(0.0)
 
+    fractional_base3 = '0' if fractional_base3.nil?
     res << '.' << fractional_base3
   end
 end
 
 # Tests
 require 'test/unit'
-require 'bigdecimal'
-require 'bigdecimal/util'
 class TestTernary < Test::Unit::TestCase
   def test_base_ternary
     assert_equal(10.to_s, 3.to_ternary)
@@ -68,7 +69,27 @@ class TestTernary < Test::Unit::TestCase
   end
 
   def test_negative_with_fractional
-    print((-2 - (1.0 / 3)).floor)
+    # print((-2 - (1.0 / 3)).floor)
     assert_equal('-2.1', (-2 - (1.0 / 3)).to_ternary)
+  end
+
+  def test_one_third
+    assert_equal('0.1', (1.0 / 3).to_ternary)
+  end
+
+  def test_two_thirds
+    assert_equal('0.2', (2.0 / 3).to_ternary)
+  end
+
+  def test_two_thirds_2
+    assert_equal('0.2', 0.666666666666666666666666666666.to_ternary)
+  end
+
+  def test_one_over_hunder
+    assert_equal('0.0000210212', (1.0 / 100).to_ternary)
+  end
+
+  def test_5_over_9
+    assert_equal('0.12', (BigDecimal('5') / 9).to_ternary)
   end
 end
